@@ -24,7 +24,7 @@ public class WordFinderTest
     }
 
     [TestMethod]
-    public void Test_Given_DemoMatrixWithOneWord_When_FindTheWord_ShouldFindIt()
+    public void Test_Given_DemoMatrixWithOneHorizontalWord_When_FindTheWord_Then_ShouldFindIt()
     {
         IList<string> matrix = new List<string>(new[] { "ABCATJNT" });
         WordFinder finder = new WordFinder(matrix);
@@ -36,26 +36,47 @@ public class WordFinderTest
     }
 
     [TestMethod]
-    public void Test_Given_DemoMatrixWithNoMatching_When_FindTheWord_ShouldNotFindIt()
+    public void Test_Given_DemoMatrixWithOneVerticalWords_When_Find_Then_ShouldFindAll()
     {
-        IList<string> matrix = new List<string>(new[] { "ABCATJNT" });
+        IList<string> matrix = new List<string>(new[] {
+            "PBCATJNP",
+            "EBCATJNA",
+            "TBDOGJNT" });
         WordFinder finder = new WordFinder(matrix);
-        IList<string> stream = new List<string>(new[] { "DOG" });
+        IList<string> stream = new List<string>(new[] { "PET" });
 
         IEnumerable<string> result = finder.Find(stream);
 
-        Assert.AreEqual(0, result.Count());
+        Assert.AreEqual(1, result.Count());
     }
 
     [TestMethod]
-    public void Test_Given_DemoMatrixWithRepeteaedWord_When_FindTheWord_ShouldBeFirst()
+    public void Test_Given_DemoMatrixWithRepeatedWord_When_FindTheWord_Then_ShouldBeFirst()
     {
-        IList<string> matrix = new List<string>(new[] { "ABCATJNT", "ABCATJNT", "ABDOGJNT" });
+        IList<string> matrix = new List<string>(new[] {
+            "ABCATJNT",
+            "ABCATJNT",
+            "ABDOGJNT" });
         WordFinder finder = new WordFinder(matrix);
         IList<string> stream = new List<string>(new[] { "CAT", "DOG" });
 
         IEnumerable<string> result = finder.Find(stream);
 
         Assert.AreEqual("CAT", result.First());
+    }
+
+    [TestMethod]
+    public void Test_Given_DemoMatrixWithHorizontalAndVerticalWords_When_Find_Then_ShouldFindAll()
+    {
+        IList<string> matrix = new List<string>(new[] {
+            "ABCATJNP",
+            "ABCATJNE",
+            "ABDOGJNT" });
+        WordFinder finder = new WordFinder(matrix);
+        IList<string> stream = new List<string>(new[] { "CAT", "DOG", "PET", "KAT" });
+
+        IEnumerable<string> result = finder.Find(stream);
+
+        Assert.AreEqual(3, result.Count());
     }
 }

@@ -15,8 +15,11 @@ namespace Domain.UseCases
             this._matrix = matrix;
             this._result = new WordFinderResult();
 
-            this._finders = new List<IWordFinder>(new[] {
-                new HorizontalWordFinder(this._matrix,this._result) });
+            this._finders = new List<IWordFinder>
+            {
+                new HorizontalWordFinder(this._matrix, this._result),
+                new VerticalWordFinder(this._matrix, this._result)
+            };
         }
 
         public IEnumerable<string> Find(IEnumerable<string> wordstream)
@@ -24,9 +27,9 @@ namespace Domain.UseCases
             Assert.NotNull(wordstream);
 
             // Pasar estos 2 a iteradores
-            for (int columnPosition = 0; columnPosition < this._matrix.Count(); columnPosition++)
+            for (int rowPosition = 0; rowPosition < this._matrix.Count(); rowPosition++)
             {
-                for (int rowPosition = 0; rowPosition < this._matrix.ElementAt(0).Length; rowPosition++)
+                for (int columnPosition = 0; columnPosition < this._matrix.ElementAt(0).Length; columnPosition++)
                 {
                     foreach (string word in wordstream)
                     {
