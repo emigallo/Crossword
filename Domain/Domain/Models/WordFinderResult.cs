@@ -1,36 +1,35 @@
-﻿namespace Domain.Models
+﻿namespace Domain.Models;
+
+internal class WordFinderResult
 {
-    internal class WordFinderResult
+    private readonly Dictionary<string, WordFinderResultItem> _result;
+    private readonly int PODIUM_WORDS_AMOUNT = 10;
+
+    public WordFinderResult()
     {
-        private Dictionary<string, WordFinderResultItem> _result;
-        private readonly int PODIUM_WORDS_AMOUNT = 10;
+        this._result = new Dictionary<string, WordFinderResultItem>();
+    }
 
-        public WordFinderResult()
+    public void AddFoundedWord(string word)
+    {
+        this.GetItemOrDefault(word)
+            .Hits++;
+    }
+
+    private WordFinderResultItem GetItemOrDefault(string word)
+    {
+        if (!this._result.ContainsKey(word))
         {
-            this._result = new Dictionary<string, WordFinderResultItem>();
+            this._result.Add(word, new WordFinderResultItem(word));
         }
 
-        public void AddFoundedWord(string word)
-        {
-            this.GetItemOrDefault(word)
-                .Hits++;
-        }
+        return this._result[word];
+    }
 
-        private WordFinderResultItem GetItemOrDefault(string word)
-        {
-            if (!this._result.ContainsKey(word))
-            {
-                this._result.Add(word, new WordFinderResultItem(word));
-            }
-
-            return this._result[word];
-        }
-
-        public IEnumerable<string> GetRanking()
-        {
-            return this._result.OrderByDescending(x => x.Value.Hits)
-                .Take(PODIUM_WORDS_AMOUNT)
-                .Select(x => x.Value.Word);
-        }
+    public IEnumerable<string> GetRanking()
+    {
+        return this._result.OrderByDescending(x => x.Value.Hits)
+            .Take(PODIUM_WORDS_AMOUNT)
+            .Select(x => x.Value.Word);
     }
 }

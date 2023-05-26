@@ -2,7 +2,7 @@
 {
     internal static class Assert
     {
-        public static void NotNull(object item, string name = "item")
+        internal static void NotNull(object item, string name = "item")
         {
             if (item is null)
             {

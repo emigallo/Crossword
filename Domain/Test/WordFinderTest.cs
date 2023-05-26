@@ -6,7 +6,7 @@ namespace Test;
 public class WordFinderTest
 {
     [TestMethod]
-    public void Test_Given_WordsToFinde_When_CreateWithNullMatrix_Then_ShouldThowArgumentException()
+    public void Test_Given_WordsToFind_When_CreateWithNullMatrix_Then_ShouldThrowArgumentException()
     {
         try
         {

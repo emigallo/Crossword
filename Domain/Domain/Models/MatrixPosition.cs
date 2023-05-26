@@ -1,8 +1,7 @@
-﻿namespace Domain.Models
+﻿namespace Domain.Models;
+
+internal class MatrixPosition
 {
-    internal class MatrixPosition
-    {
-        public int Row { get; init; }
-        public int Column { get; init; }
-    }
+    internal int Row { get; init; }
+    internal int Column { get; init; }
 }
